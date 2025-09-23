@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -10,18 +9,17 @@ int main(){
         printf("Child Process: ");
     }
     else{
-        pid_t status = wait(NULL);
+        int status;
+        pid_t temp = waitpid(pid, &status, 0);
         pid_t pid2 = fork();
         if (pid2 == 0){
             printf("Second Child Process: ");
         }
         else{
-            int temp;
-            pid_t status2 = waitpid(pid2, &temp, 0);
+            int status2;
+            pid_t temp2 = waitpid(pid2, &status2, 0);
             printf("Exit Status of First Child: %d\n", status);
             printf("Exit Status of Second Child: %d\n", status2);
             printf("Parent Process: ");
         }
     }
-    printf("%d\n", (int) getpid());
-}
